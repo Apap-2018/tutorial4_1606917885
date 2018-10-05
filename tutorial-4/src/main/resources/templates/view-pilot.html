@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>View</title>
+	</head>
+	<body>
+		<h2>Hello!</h2>
+		<div style="border-style: solid; border-color:black;">
+			<h3>Pilot</h3>
+			<p th:text="'Pilot License Number: ' + ${pilot.licenseNumber}"></p>
+			<p th:text="'Name: ' + ${pilot.name}"></p>
+			<p th:text="'Fly Hour: ' + ${pilot.flyHour}"></p>
+			<tr>
+				<td>
+					<form th:action="@{/pilot/update}" method="GET">
+					<input type="hidden" name="licenseNumber" th:value="${pilot.licenseNumber}" />
+					<button type="submit">Update</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/pilot/delete}" method="GET">
+					<input type="hidden" name="id" th:value="${pilot.id}" />
+					<button type="submit">Delete</button>
+					</form>
+				</td>
+			</tr>
+				
+			
+			<br>
+			<h3>Flight</h3>
+			<div th:each="pilotFlight: ${pilot.pilotFlight}">
+			<p th:text="'Flight Number: ' + ${pilotFlight.flightNumber}"></p>
+			<p th:text="'Origin: ' + ${pilotFlight.origin}"></p>
+			<p th:text="'Destination: ' + ${pilotFlight.destination}"></p>
+			<p th:text="'Time: ' + ${pilotFlight.time}"></p>
+			<form th:action="@{/flight/update}" method="GET">
+				<input type="hidden" name="id" th:value="${pilotFlight.id}" />
+				<button type="submit">Update</button>
+			</form>
+			<form th:action="@{/flight/delete}" method="GET">
+				<input type="hidden" name="id" th:value="${pilotFlight.id}" />
+				<button type="submit">Delete</button>
+			</form>
+			<br>
+			</div>
+			<br><br>
+			<a th:href = "@{/flight/add/{licenseNumber}
+			(licenseNumber=${pilot.licenseNumber})}">Add Flight</a>	
+		</div>
+	</body>
+</html>
